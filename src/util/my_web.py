@@ -19,13 +19,15 @@ stock_database = {
 }
 
 ######################################################################################
-"""
-Fetch CSV data series from the Internet.
 
-@param stock_shortname - optionally provide which stock you want, e.g "VWRL:LSE:GBP"
-@return (date_series, value_series) - two lists for dates and prices
-"""
+
 def fetch_data(stock_shortname=datasource_default_stock):
+    """
+    Fetch CSV data series from the Internet.
+
+    @param stock_shortname - optionally provide which stock you want, e.g "VWRL:LSE:GBP"
+    @return (date_series, price_series) - two lists for dates and prices
+    """
     # prepare request data
     request_data = {
         "days": datasource_days,
@@ -50,13 +52,13 @@ def fetch_data(stock_shortname=datasource_default_stock):
                                         "Response: {}". format(stock_shortname, response.status_code)
 
     response_dict = json_to_dict(response.text)
-    value_series  = extract_values_from_response(response_dict)
+    price_series  = extract_values_from_response(response_dict)
     date_series   = extract_dates_from_response(response_dict)
 
-    assert len(value_series) == len(date_series), "Stock data does not have equal length"
+    assert len(price_series) == len(date_series), "Stock data does not have equal length"
 
     date_series = sanitise_dates(date_series)
-    return date_series, value_series
+    return date_series, price_series
 
 
 def dict_to_json(dictionary):
@@ -115,3 +117,7 @@ def pretty_print_POST(prepared):
 def print_available_stocks():
     for shortname, stock in stock_database.items():
         print("{} - {}".format(shortname, stock["name"]))
+
+
+def available_stocks():
+    return stock_database.keys()

@@ -9,9 +9,9 @@ def plot_values(*args):
     """
     assert 1 <= len(args) <= 2
 
-    if len(args) == 1:      # assume values
+    if len(args) == 1:      # assume prices
         plt.plit(args[0])
-    if len(args) == 2:      # assume dates, values
+    if len(args) == 2:      # assume dates, prices
         dates = [dt.datetime.strptime(d, '%Y-%m-%d') for d in args[0]]
         plt.plot(dates, args[1])
 
