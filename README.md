@@ -19,9 +19,22 @@ These can be:
 - populate trading data from the Internet
 - plot data series
 
+### TODO
+- Store internet data in `trading_data` folder in the correct CSV format
+- automate the process of getting/refreshing data
+- plot price series in individual figures
+
+### DONE
+- query the Internet for the trading data
+- extract price and date series from the internet data
+
 ## Investment Framework
 Run a trading simulation using a selection of trading data and a prediction model.
-Plot profits and losses over time for comporison of different trading strategies.
+Plot profits and losses over time for comparison of different trading strategies.
+
+### TODO
+- create simulation skeleton
+### DONE
 
 ## Investing Models
 Code and Data for price prediction model.
@@ -30,3 +43,7 @@ Some models are simplistic and do no require any model data to be stored.
 Some models are complex deep learning architectures that are trained prior to any prediction.
 Trained models might share model architectures and only differ in hyperparameters used during training.
  
+### TODO
+- design model interface
+- create simple models for testing
+### DONE
