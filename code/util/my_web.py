@@ -66,16 +66,17 @@ def dict_to_json(dictionary):
 def json_to_dict(json_str):
     return json.loads(json_str)
 
-"""
-When the data series comes back from the server, we need to get only the interesting bits,
-i.e. the data series for prices that we requsted
-"""
+
 def extract_values_from_response(response):
-    # component series are:
-    # 0 - open
-    # 1 - high
-    # 2 - low
-    # 3 - close   <- we use this one
+    """
+    When the data series comes back from the server, we need to get only the interesting bits,
+    i.e. the data series for prices that we requeted
+    component series are:
+    0 - open
+    1 - high
+    2 - low
+    3 - close   <- we use this one
+    """
     return response["Elements"][0]["ComponentSeries"][3]['Values']
 
 
@@ -83,29 +84,34 @@ def extract_dates_from_response(response):
     return response["Dates"]
 
 
-"""
-Convert date format from
-"2012-05-23T00:00:00" to
-"2012-05-23"
-"""
 def sanitise_dates(dates):
+    """
+    Convert date format from
+    "2012-05-23T00:00:00" to
+    "2012-05-23"
+    """
     result = []
     for date in dates:
         result.append(date.split('T')[0])
     return result
 
 
-"""
-Accept a prepared request and print what it would look like "raw"
-
-example:
-req = requests.Request('POST','https://markets.ft.com/data/chartapi/series',headers=request_headers,data=request_data)
-pretty_print_POST(req.prepare())
-"""
 def pretty_print_POST(prepared):
+    """
+    Accept a prepared request and print what it would look like "raw"
+
+    example:
+    req = requests.Request('POST','https://markets.ft.com/data/chartapi/series',headers=request_headers,data=request_data)
+    pretty_print_POST(req.prepare())
+    """
     print('{}\n{}\r\n{}\r\n\r\n{}'.format(
         '-----------START-----------',
         prepared.method + ' ' + prepared.url,
         '\r\n'.join('{}: {}'.format(k, v) for k, v in prepared.headers.items()),
         prepared.body,
     ))
+
+
+def print_available_stocks():
+    for shortname, stock in stock_database.items():
+        print("{} - {}".format(shortname, stock["name"]))
