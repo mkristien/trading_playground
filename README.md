@@ -20,13 +20,13 @@ These can be:
 - plot data series
 
 ### TODO
-- Store internet data in `trading_data` folder in the correct CSV format
 - automate the process of getting/refreshing data
-- plot price series in individual figures
 
 ### DONE
 - query the Internet for the trading data
 - extract price and date series from the internet data
+- Store internet data into `trading_data` folder in the correct CSV format
+- plot price series in individual figures
 
 ## Investment Framework
 Run a trading simulation using a selection of trading data and a prediction model.

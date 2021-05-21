@@ -1,7 +1,6 @@
 from matplotlib import pyplot as plt
 import datetime as dt
 
-
 def plot_values(*args):
     """
     When we plot price against dates
@@ -16,4 +15,29 @@ def plot_values(*args):
         plt.plot(dates, args[1])
 
     plt.tight_layout()
+    plt.show()
+
+
+model_prices = []
+stock_prices = []
+
+def add_stock(stock_series):
+    global stock_prices
+    stock_prices = stock_series
+
+def add_evaluation(model_series):
+    model_prices.append(model_series)
+
+
+def plot_all():
+    fig, ax1 = plt.subplots()
+    ax1.set_xlabel("time")
+    ax1.set_ylabel("stock price", color="red")
+    ax1.plot(stock_prices, color="red")
+
+    ax2 = ax1.twinx()
+    ax2.set_ylabel("portfolio price", color="blue")
+    for prices in model_prices:
+        ax2.plot(prices, color="blue")
+    fig.tight_layout()
     plt.show()
