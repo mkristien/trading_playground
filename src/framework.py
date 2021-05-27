@@ -5,7 +5,7 @@ import util.my_file
 import util.my_plot
 
 from model.regular_investment import RegularInvestment
-from model.start_investment import StartInvestment
+from model.lin_regression import StartInvestment
 
 ##########################################################################################
 # Configuration

@@ -19,4 +19,5 @@ This is a statistical autoregressive integrated moving average model to fit and 
 ## Trading data source
 [Financial Times](https://markets.ft.com/data/etfs/tearsheet/summary?s=VFEM:LSE:GBP)
 
-
+## Trading prediction paper (open access)
+[Short-term stock market price trend prediction using a comprehensive deep learning system](https://journalofbigdata.springeropen.com/articles/10.1186/s40537-020-00333-6)
