@@ -1,17 +1,20 @@
 #!/usr/bin/env python
 import argparse
-import util.my_web
 import util.my_plot
 import util.my_file
 
 from predictor.lin_regression import LinearRegression
 from predictor.star_to_end_price import StartToEndLine
 from predictor.constant import TheSameAsYesterday
+from predictor.exponential_mean import ExponentialMean9, ExponentialMean99, ExponentialMean8
 
 predictor_classes = [
     LinearRegression,
-    # StartToEndLine,
+    # StartToEndLine,   # this one is useless, almost the same as TheSameAsYesterday
     TheSameAsYesterday,
+    ExponentialMean8,
+    ExponentialMean9,
+    ExponentialMean99
 ]
 
 
@@ -31,11 +34,11 @@ class PredictorRunner:
         """
         # initialise predictor_classes, assume perfect prediction during training
         training_prices = self.true_prices[:self.train_period]
-        predictors = []
+        self.predictors = []
         errors     = []
         for _, predictor in enumerate(predictor_classes):
             # create a predictor object
-            predictors.append(predictor(training_prices))
+            self.predictors.append(predictor(training_prices))
             errors.append(0)
             # copy all true prices from training period
             self.predictor_prices.append([])
@@ -45,7 +48,7 @@ class PredictorRunner:
         # go through remaining prices and record predictions
         for price in self.true_prices[self.train_period:]:
             # make predictions and update predictors with the true price
-            for i, predictor in enumerate(predictors):
+            for i, predictor in enumerate(self.predictors):
                 new_price = predictor.predicted_price()
                 errors[i] += abs(new_price - price)
 
@@ -56,8 +59,8 @@ class PredictorRunner:
 
     def print_data(self):
         util.my_plot.add_stock(self.true_prices)
-        for i, _ in enumerate(predictor_classes):
-            util.my_plot.add_evaluation(self.predictor_prices[i])
+        for i, predictor in enumerate(self.predictors):
+            util.my_plot.add_evaluation(self.predictor_prices[i], str(predictor))
 
         util.my_plot.plot_all()
 
@@ -74,7 +77,7 @@ class ShowOptionAction(argparse.Action):
 parser = argparse.ArgumentParser(description="Pick stock data and run it through predictor_classes")
 parser.add_argument("-s", "--show", nargs=0, action=ShowOptionAction, help="Print local stock data options")
 parser.add_argument("stock", type=str, help="stock short name, as returned by --show")
-parser.add_argument("-t", "--train", metavar='N', type=int, default=10, help="number of days to train predictor")
+parser.add_argument("-t", "--train", metavar='N', type=int, default=100, help="number of days to train predictor")
 
 if __name__ == "__main__":
     args = parser.parse_args()

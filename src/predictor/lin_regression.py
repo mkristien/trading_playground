@@ -4,9 +4,6 @@ from scipy import stats
 
 
 class LinearRegression(AbstractPredictor):
-    slope     = 0
-    intercept = 0
-
     def __init__(self, price_history):
         super().__init__(price_history)
         self.slope, self.intercept, _, _, _ = stats.linregress(
