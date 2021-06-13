@@ -4,8 +4,8 @@ import argparse
 import util.my_file
 import util.my_plot
 
-from model.regular_investment import RegularInvestment
-from model.lin_regression import StartInvestment
+from predictor.regular_investment import RegularInvestment
+from predictor.lin_regression import StartInvestment
 
 ##########################################################################################
 # Configuration
@@ -13,11 +13,11 @@ initial_funds   = 1000
 
 model_database = {
     "RegularInvestment": {
-        "model": RegularInvestment,
+        "predictor": RegularInvestment,
         "description": "Invest in regular intervals, e.g. every week"
     },
     "StartInvestment": {
-        "model": StartInvestment,
+        "predictor": StartInvestment,
         "description": "Invest all funds at the beginning, watch it grow"
     }
 }
@@ -38,7 +38,7 @@ parser.add_argument("-s", "--show-stocks", nargs=0, action=ShowStockAction, help
 parser.add_argument("-m", "--show-models", nargs=0, action=ShowModelAction, help="Print available trading models")
 parser.add_argument("-p", "--plot", action="store_true", help="Plot simulation history")
 parser.add_argument("stock", type=str, help="stock short name, as returned by --show-stocks")
-parser.add_argument("model", type=str, help="model name to use in the simulation, as returned by --show-models")
+parser.add_argument("predictor", type=str, help="predictor name to use in the simulation, as returned by --show-models")
 
 ##########################################################################################
 # Simulation
@@ -51,7 +51,7 @@ def current_evaluation(stock_amount, stock_price):
 
 
 def create_model(model_name, simulation_time):
-    return model_database[model_name]["model"](initial_funds, simulation_time)
+    return model_database[model_name]["predictor"](initial_funds, simulation_time)
 
 
 def run_simulation(price_series, trading_model):

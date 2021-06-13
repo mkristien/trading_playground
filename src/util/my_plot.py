@@ -18,6 +18,8 @@ def plot_values(*args):
     plt.show()
 
 
+colors = ['b','g','c','m','y']
+
 model_prices = []
 stock_prices = []
 
@@ -32,12 +34,13 @@ def add_evaluation(model_series):
 def plot_all():
     fig, ax1 = plt.subplots()
     ax1.set_xlabel("time")
-    ax1.set_ylabel("stock price", color="red")
+    ax1.set_ylabel("stock price")
     ax1.plot(stock_prices, color="red")
 
-    ax2 = ax1.twinx()
-    ax2.set_ylabel("portfolio price", color="blue")
-    for prices in model_prices:
-        ax2.plot(prices, color="blue")
+    ax2 = ax1
+    # ax2 = ax1.twinx()
+    # ax2.set_ylabel("portfolio price", color="blue")
+    for i, prices in enumerate(model_prices):
+        ax2.plot(prices, color=colors[i])
     fig.tight_layout()
     plt.show()
